@@ -16,7 +16,7 @@
 #
 AUTHOR_EMAIL=info@appvia.io
 
-.PHONY: all security lint format documentation documentation-examples
+.PHONY: all security lint format documentation documentation-examples validate-all validate validate-examples init
 
 default: all
 
@@ -45,9 +45,20 @@ init:
 	@echo "--> Running terraform init"
 	@terraform init -backend=false
 
+validate-all:
+	@echo "--> Running all validation checks"
+	$(MAKE) validate
+	$(MAKE) validate-examples
+
 validate:
 	@echo "--> Running terraform validate"
+	@terraform init -backend=false
 	@terraform validate
+
+validate-examples:
+	@echo "--> Running terraform validate on examples"
+	@find examples -type d -mindepth 1 -maxdepth 1 -exec terraform init -backend=false {} \;
+	@find examples -type d -mindepth 1 -maxdepth 1 -exec terraform validate {} \;
 
 lint:
 	@echo "--> Running tflint"
