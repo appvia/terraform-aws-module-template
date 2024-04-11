@@ -71,3 +71,10 @@ lint:
 format: 
 	@echo "--> Running terraform fmt"
 	@terraform fmt -recursive -write=true
+
+clean:
+	@echo "--> Cleaning up"
+	@find . -type d -name ".terraform" | while read -r dir; do \
+		echo "--> Removing $$dir"; \
+		rm -rf $$dir; \
+	done
