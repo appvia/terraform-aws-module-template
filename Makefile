@@ -103,6 +103,7 @@ validate:
 	@terraform validate
 	$(MAKE) validate-modules
 	$(MAKE) validate-examples
+	$(MAKE) validate-commits
 
 validate-modules:
 	@echo "--> Running terraform validate on modules"
@@ -125,7 +126,8 @@ validate-examples:
 	fi
 
 validate-commits:
-	@echo "--> Running commitlint against the "
+	@echo "--> Running commitlint against the main branch"
+	@git log --pretty=format:"%s" origin/main..HEAD | commitlint --from=origin/main
 
 lint:
 	@echo "--> Running tflint"
