@@ -124,6 +124,9 @@ validate-examples:
 		done; \
 	fi
 
+validate-commits:
+	@echo "--> Running commitlint against the "
+
 lint:
 	@echo "--> Running tflint"
 	@tflint --init 
