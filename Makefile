@@ -136,6 +136,7 @@ lint:
 	@tflint -f compact
 	$(MAKE) lint-modules
 	$(MAKE) lint-examples
+	$(MAKE) lint-actions
 
 lint-modules:
 	@echo "--> Running tflint on modules"
@@ -152,6 +153,11 @@ lint-examples:
 		tflint --chdir=$$dir --init; \
 		tflint --chdir=$$dir -f compact; \
 	done;
+
+lint-actions:
+	@echo "--> Running Linting on GitHub Actions"
+	@command -v actionlint >/dev/null 2>&1 || { echo "actionlint is not installed. Please install the binary'"; exit 1; }
+	@actionlint .github/workflows/*.yml
 
 format:
 	@echo "--> Running terraform fmt"
