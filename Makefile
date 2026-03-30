@@ -140,7 +140,7 @@ lint:
 
 lint-modules:
 	@echo "--> Running tflint on modules"
-	@find . -type d -regex '.*/modules/[a-zA-Z\-_$$]*' -not -path '*.terraform*' 2>/dev/null | while read -r dir; do \
+	@find . -type d -depth 2 -regex '.*/modules/[a-zA-Z\_]*' -not -path '*.terraform*' 2>/dev/null | while read -r dir; do \
 		echo "--> Linting $$dir"; \
 		tflint --chdir=$$dir --init; \
 		tflint --chdir=$$dir -f compact; \
